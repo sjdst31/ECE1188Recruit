@@ -101,15 +101,15 @@ int main(void){ uint8_t status;
     status = Port1_Input();
     switch(status){                 // switches are negative logic on P1.1 and P1.4
       case 0x10:                    // SW1 pressed
-        Port2_Output(BLUE);
-        Port1_Output(1);
-        break;
-      case 0x02:                    // SW2 pressed
         Port2_Output(RED);
         Port1_Output(1);
         break;
+      case 0x02:                    // SW2 pressed
+        Port2_Output(PURPLE);
+        Port1_Output(1);
+        break;
       case 0x00:                    // both switches pressed
-        Port2_Output(BLUE+RED);
+        Port2_Output(YELLOW);
         Port1_Output(1);
         break;
       case 0x12:                    // neither switch pressed
@@ -137,7 +137,7 @@ void Port1_Output2(uint8_t data){  // write output to P1.0
 }
 void Port2_Init2(void){
   P2->SEL0 &= ~0x07;
-  P2->SEL1 &= ~0x07;    // 1) configure P2.2-P2.0 as GPIO
+  P2->SEL1 &= ~0x80;    // 1) configure P2.2-P2.0 as GPIO
   P2->DIR |= 0x07;      // 2) make P2.2-P2.0 out
   P2->DS |= 0x07;       // 3) activate increased drive strength
   P2->OUT &= ~0x07;     //    all LEDs off
@@ -161,7 +161,7 @@ int main2(void){ uint8_t status;
         Port1_Output2(1);
         break;
       case 0x00:                    // both switches pressed
-        Port2_Output2(BLUE+RED);
+        Port2_Output3(BLUE+RED);
         Port1_Output2(1);
         break;
       case 0x12:                    // neither switch pressed
